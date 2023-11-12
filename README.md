@@ -1,6 +1,6 @@
-kount is SIMD accelerated line counter. it can count other bytes too.
+kount is SIMD accelerated line counter. it can count other bytes too. only ARM Neon is supported.
 
-Benchmark against wc and [ct](https://github.com/parof/ct) (compiled with -Doptimize=ReleaseFast)
+Benchmark against wc and [ct](https://github.com/parof/ct) (compiled with -Doptimize=ReleaseFast):
 ```
 hyperfine --warmup 5 './ct 1Gb.txt' './bin/kount 1Gb.txt' 'wc 1Gb.txt'
 Benchmark 1: ./ct2 1Gb.txt
