@@ -1,0 +1,7 @@
+*.txt
+*.odin
+*.bin
+ct*
+bin/
+*.o
+ols.json
