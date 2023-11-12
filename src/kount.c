@@ -49,8 +49,8 @@ int main(int argc, char *argv[]) {
   }
 
   uint8x16_t needle_mask = create8x16(needle);
-// 0 for AND, 1 for SHIFT
-#define METHOD 1
+// 0 for AND, 1 for SHIFT, 2 for POPCOUNT
+#define METHOD 2
 #if METHOD == 0
   uint8x16_t last_set_bit = create8x16(1);
 #endif
@@ -63,8 +63,10 @@ int main(int argc, char *argv[]) {
     buf = vld1q_u8(map + off);
 #if METHOD == 0
     count += vaddvq_u8(vandq_u8(last_set_bit, vceqq_u8(buf, needle_mask)));
-#else
+#elif METHOD == 1
     count += vaddvq_u8(vshrq_n_u8(vceqq_u8(buf, needle_mask), 7));
+#elif METHOD == 2
+    count += vaddvq_u8(vcntq_u8(vceqq_u8(buf, needle_mask))) / 8;
 #endif
     off += STRIDE;
   }
